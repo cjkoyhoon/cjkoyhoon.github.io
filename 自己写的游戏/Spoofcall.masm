@@ -1,0 +1,55 @@
+.code
+    _spoofer_stub proc
+        pop r11
+        add rsp, 8
+        mov rax, [rsp + 24]
+
+        mov r10, [rax]
+        mov [rsp], r10
+
+        mov r10, [rax + 8]
+        mov [rax + 8], r11
+ 
+        mov [rax + 16], rbp
+        lea rbp, fixup
+        mov [rax], rbp
+        mov rbp, rax
+
+        jmp r10
+ 
+        fixup:
+        sub rsp, 16
+        mov rcx, rbp
+        mov rbp, [rcx + 16]
+        jmp QWORD PTR [rcx + 8]
+    _spoofer_stub endp
+
+_spoofer_stub1 proc
+pop r11
+add rsp, 8
+mov rax, [rsp + 24]
+
+mov r10, [rax]
+mov[rsp], r10
+
+mov r10, [rax + 8]
+mov[rax + 8], r11
+
+mov[rax + 16], rbp
+lea rbp, fixup
+mov[rax], rbp
+sub rax,59h
+
+mov rbp, rax
+jmp r10
+
+fixup :
+sub rsp, 16
+add rbp, 59h
+mov rcx, rbp
+mov rbp, [rcx + 16]
+jmp qword ptr [rcx + 8]
+_spoofer_stub1 endp
+
+
+end
